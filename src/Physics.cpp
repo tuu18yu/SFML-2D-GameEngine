@@ -110,3 +110,46 @@ bool detectCollision(int nVertices1, int nVertices2, std::vector<Vec2> vertices1
 
 	return true;
 }
+
+bool rayCast(Vec2 s1, Vec2 e1, Vec2 s2, Vec2 e2, Vec2& intersection)
+{
+
+	Vec2 r = e1 - s1;
+	Vec2 s = e2 - s2;
+
+	float rxs = r.cross_product(s);
+	float u = ((s2 - s1).cross_product(s)) / rxs;
+	float t = (r.cross_product((s1 - s2))) / rxs;
+
+	if (u >= 0 && u <= 1 && t >= 0 && t <= 1)
+	{
+		intersection = (r * u) + s1;
+		return true;
+	}
+	return false;
+}
+
+bool rayCast(Vec2 ray_start, Vec2 ray_end, Vec2 center, float radius, Vec2& intersection)
+{
+	Vec2 e = center - ray_start;
+	Vec2 o = ray_end - ray_start;
+	o.normalize();
+
+	float e_size = e.getLength();
+	float o_dot_e = o.dot_product(e);
+
+	if (e_size < o_dot_e) { return false; }
+	float a = sqrt(pow(e_size, 2) - pow(o_dot_e, 2));
+	
+	if (radius < a) { return false; }
+	float b = sqrt(pow(radius, 2) - pow(a, 2));
+
+	// t is the length from start of ray to the first intersection of the circle in unit vector o direction 
+	float t = o_dot_e - b;
+	Vec2 ray = ray_end - ray_start;
+	float ray_size = ray.getLength();
+	// if t is negative circle is in opposite direction of ray, if t is greater than end of the ray, ray did not reach the circle
+	if (t < 0 || t > ray_size) { return false; }
+	intersection = (ray * (t/ray_size)) + ray_start;
+	return true;
+}
