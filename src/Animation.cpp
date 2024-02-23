@@ -15,7 +15,6 @@ Animation::Animation(const std::string& name, const sf::Texture& t, std::size_t 
 	:m_name(name), m_totalFrame(totalFrame), m_speed(speed)
 {
 	m_sprite = sf::Sprite(t);
-	m_sprite.setPosition(250, 250);
 }
 
 void Animation::update(int gameFrame)
