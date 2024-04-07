@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\Physics.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Animation.cpp">
+      <Filter>Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Vec2.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Camera.cpp" />
+    <ClCompile Include="..\src\GameEngine.cpp">
+      <Filter>ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\MemoryPool.cpp">
+      <Filter>ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Action.cpp" />
+    <ClCompile Include="..\src\Assets.cpp">
+      <Filter>Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Scene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SceneTest.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\Physics.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Animation.h">
+      <Filter>Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Vec2.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Camera.h" />
+    <ClInclude Include="..\src\Components.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\EntityManager.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GameEngine.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\MemoryPool.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Action.h" />
+    <ClInclude Include="..\src\Assets.h">
+      <Filter>Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SceneTest.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{65f8a40e-9ecb-4130-a526-875f3eb51115}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{da81b917-22c6-4e74-a733-12f4dc6e47a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ECS">
+      <UniqueIdentifier>{02e15d3c-c1a0-4854-bf15-064992d37def}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{de9ca449-205d-4556-94fb-a7070b5a9c8e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
