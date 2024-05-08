@@ -13,9 +13,10 @@ MemoryPool::MemoryPool(int maxEntities)
 	std::vector<CGravity> gravity(maxEntities);
 	std::vector<CAnimation> animation(maxEntities);
 	std::vector<CState> state(maxEntities);
+	std::vector<CShape> shape(maxEntities);
 	
 
-	m_data = std::make_tuple( trans, life, input, box, gravity, animation, state);
+	m_data = std::make_tuple( trans, life, input, box, gravity, animation, state, shape);
 }
 
 size_t MemoryPool::getEmptyIndex()
@@ -33,10 +34,22 @@ size_t MemoryPool::getEmptyIndex()
 	return -1;
 }
 
-size_t MemoryPool::addEntity(const std::string tag)
+size_t MemoryPool::addEntity(std::string tag)
 {
 	size_t ID = getEmptyIndex();
-	// set all vectors[index] = 0
+	m_lastAssignedID = ID;
+	m_numEntities++;
+	// set all tag[index], active[index] = defaults
+	m_tags[ID] = tag;
+	m_active[ID] = true;
+	return ID;
+}
+
+void MemoryPool::removeEntity(size_t ID)
+{
+	m_numEntities--;
+	m_active[ID] = false;
+	m_tags[ID] = "N/A";
 	getComponent<CTransform>(ID).has = false;
 	getComponent<CLifeSpan>(ID).has = false;
 	getComponent<CInput>(ID).has = false;
@@ -44,9 +57,13 @@ size_t MemoryPool::addEntity(const std::string tag)
 	getComponent<CGravity>(ID).has = false;
 	getComponent<CAnimation>(ID).has = false;
 	getComponent<CState>(ID).has = false;
+	getComponent<CShape>(ID).has = false;
+}
 
-	// set all tag[index], active[index] = defaults
-	m_tags[ID] = -1;
-	m_active[ID] = true;
-	return ID;
+void MemoryPool::clear()
+{
+	for (int ID = 0; ID < MAX_ENTITIES; ID++)
+	{
+		removeEntity(ID);
+	}
 }

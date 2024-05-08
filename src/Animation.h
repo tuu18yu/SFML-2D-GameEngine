@@ -13,6 +13,7 @@ class Animation
 	Vec2			m_size = { 1, 1 }; // texWidth/frameCount, texHeight
 	Vec2			m_position = { 0, 0 }; // the position of target image from the sprite sheet
 	Vec2			m_offset = { 0, 0 };
+	Vec2			m_scale = { 1.f, 1.f };
 	std::string		m_name = "none";
 	bool			m_hasEnded = false;
 	bool			m_hasPlayed = false;
@@ -37,9 +38,13 @@ public:
 	void setOffset(float width, float height) { m_offset = Vec2(width, height); };
 	void endAnimation(bool end) { m_hasEnded = end; };
 	void setRepeat(bool isRepeated) { m_repeat = isRepeated; }
+	void setScale(float x, float y) { m_scale = Vec2(x, y); }
+
+	void setOrigin(float x, float y) { m_sprite.setPosition(x, y); }
 
 	bool hasEnded() const { return m_hasEnded; };
 	const Vec2& getSize() const { return m_size; };
+	const Vec2& getScale() const { return m_scale; };
 	const std::string& getName() const { return m_name; };
 	sf::Sprite& getSprite() { return m_sprite; };
 };

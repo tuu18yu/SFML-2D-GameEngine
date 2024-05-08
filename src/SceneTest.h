@@ -22,6 +22,8 @@ public:
 	void sRender();
 	void update();
 
+	void init() override;
+
 	void sDoAction(const Action& action);
 	void sMovement();
 	void sAnimation();

@@ -1,0 +1,9 @@
+RIGHT character 3 10 1 0 97 1 16 31 3 3
+LEFT character 3 10 1 0 97 1 16 31 -3 3
+SHIFT_RIGHT character 1 1 1 0 148 1 16 31 3 3
+SHIFT_LEFT character 1 1 1 0 148 1 16 31 -3 3
+STAND_RIGHT character 1 1 1 0 80 1 16 31 3 3
+STAND_LEFT character 1 1 1 0 80 1 16 31 -3 3
+JUMP_RIGHT character 1 1 1 0 165 1 16 31 3 3
+JUMP_LEFT character 1 1 1 0 165 1 16 31 -3 3
+ITEM_BLOCK block 3 10 1 0 4 43 15 22 3 3

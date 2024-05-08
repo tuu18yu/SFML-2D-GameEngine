@@ -1,0 +1,5 @@
+Texture misc ../data/super_mario_bros/background.png
+Texture background ../data/super_mario_bros/bg-1-1.png
+Texture character ../data/super_mario_bros/mario-luigi.png
+Texture title ../data/super_mario_bros/title.png
+Animation name ../data/super_mario_bros/Animation.txt

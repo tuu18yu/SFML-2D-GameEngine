@@ -35,4 +35,6 @@ void Animation::update(int gameFrame)
 	int top_pos = (int) m_offset.y + (int) m_position.y;
 	sf::IntRect boundary{ left_pos, top_pos, (int) m_size.x, (int) m_size.y };
 	m_sprite.setTextureRect(boundary);
+	m_sprite.setOrigin(m_size.x / 2, m_size.y / 2);
+	m_sprite.setScale(m_scale.x, m_scale.y);
 }

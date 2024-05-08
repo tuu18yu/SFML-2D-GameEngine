@@ -3,13 +3,16 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Window/Mouse.hpp"
 #include "Scene.h"
+#include "SceneMenu.h"
 #include "SceneTest.h"
+#include "SceneMario.h"
 #include "Assets.h"
 #include "MemoryPool.h"
 
 #include <memory>
 
 typedef std::map<int, std::shared_ptr<Scene>> SceneMap;
+typedef std::map<int, std::string> AssetsMap;
 
 class GameEngine
 {
@@ -18,6 +21,7 @@ protected:
 	Assets				m_assets;
 	int					m_currentScene;
 	SceneMap			m_sceneMap;
+	AssetsMap			m_assetsMap;
 	size_t				m_simulationSpeed = 1;
 	bool				m_running = true;
 
@@ -31,7 +35,7 @@ protected:
 
 public:
 	GameEngine(const std::string& path);
-	// void changeScene(const int sceneName, std::shared_ptr<Scene> scene, bool endCurrentScene = false);
+	void changeScene(const int sceneName);
 	void quit();
 	void run();
 	

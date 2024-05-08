@@ -6,6 +6,11 @@
 SceneTest::SceneTest(GameEngine* gameEngine)
 	:Scene(gameEngine)
 {
+	//init();
+}
+
+void SceneTest::init()
+{
 	registerAction(sf::Keyboard::D, "RIGHT");
 	m_playerID = m_entityManager.addEntity("PLAYER");
 	m_entityManager.getComponentVector<CInput>()[m_playerID].has = true;
@@ -21,7 +26,7 @@ SceneTest::SceneTest(GameEngine* gameEngine)
 	m_entityManager.getComponentVector<CTransform>()[test].has = true;
 	m_entityManager.getComponentVector<CTransform>()[test].pos = Vec2{ 100, 300 };
 	m_entityManager.getComponentVector<CAnimation>()[test].animation = (m_game->assets()).getAnimation("STAND");
-	
+
 }
 
 

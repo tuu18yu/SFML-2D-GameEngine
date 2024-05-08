@@ -8,21 +8,31 @@ GameEngine::GameEngine(const std::string& path)
 void GameEngine::init(const std::string& path)
 {
 	m_assets.loadFromFile(path);
-	m_windows.create(sf::VideoMode(1000, 500), "Game Engine");
+	m_windows.create(sf::VideoMode(1280, 960), "Game Engine");
 	m_windows.setFramerateLimit(100);
 	
-	auto p = std::make_shared<SceneTest>(this);
+	std::shared_ptr<Scene> p;
+
+	p = std::make_shared<SceneMenu>(this);
 	m_sceneMap[0] = p;
-	m_currentScene = 0;
+	m_assetsMap[0] = "../data/main_menu/assets.txt";
+
+	p = std::make_shared<SceneMario>(this);
+	m_sceneMap[1] = p;
+	m_assetsMap[1] = "../data/super_mario_bros/SuperMarioBros.txt";
+
+	p = std::make_shared<SceneTest>(this);
+	m_sceneMap[2] = p;
+	m_assetsMap[2] = "../data/test_ecs/TestECS.txt";
+
+	m_currentScene = 1;
+	m_assets.loadFromFile(m_assetsMap[m_currentScene]);
 }
 
 void GameEngine::update()
 {
 	
 	sKeyboardInput();
-	//m_assets.getAnimation("STAND").getSprite().setPosition(50, 30);
-	//m_assets.getAnimation("STAND").update(0);
-	//m_windows.draw(m_assets.getAnimation("STAND").getSprite());
 	currentScene()->update();
 }
 
@@ -73,7 +83,12 @@ void GameEngine::quit()
 	m_windows.close();
 }
 
-//void GameEngine::changeScene(const int sceneName, std::shared_ptr<Scene> scene, bool endCurrentScene = false)
-//{
-//	
-//}
+void GameEngine::changeScene(const int sceneName)
+{
+	currentScene()->clearEntityManager();
+	m_currentScene = sceneName;
+	m_assets.clear();
+	m_assets.loadFromFile(m_assetsMap[sceneName]);
+	currentScene()->init();
+
+}

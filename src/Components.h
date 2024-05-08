@@ -44,8 +44,7 @@ public:
 	bool left		= false;
 	bool right		= false;
 	bool shoot		= false;
-	bool canShoot	= true;
-	bool canJump	= true;
+	bool jump		= false;
 
 	CInput(){}
 };
@@ -70,11 +69,14 @@ public:
 		: size(s), halfSize(s.x / 2, s.y / 2) {}
 };
 
-
 class CGravity : public Component
 {
 public:
 	float gravity = 0;
+	float speed = 0;
+	float threshold = 0;
+	float current = 0;
+	bool isFall = false;
 	CGravity() {}
 	CGravity(float g)
 		: gravity(g) {}
@@ -83,8 +85,19 @@ public:
 class CState : public Component
 {
 public:
-	std::string state = "jumping";
+	std::string state = "";
 	CState() {}
 	CState(const std::string & s)
 		: state(s) {}
+};
+
+class CShape : public Component
+{
+public:
+	sf::RectangleShape shape;
+	CShape() {}
+	CShape(sf::RectangleShape s)
+		: shape(s)
+	{
+	}
 };

@@ -5,8 +5,8 @@
 
 #include "Components.h"
 
-constexpr int MAX_ENTITIES = 10;
-constexpr int NUM_COMPONENTS = 7;
+constexpr int MAX_ENTITIES = 100;
+constexpr int NUM_COMPONENTS = 8;
 
 // MemoryPool where it contains 'rows' or vector of each Component where each 'column' or index of the tuple is an Entity
 typedef std::tuple<
@@ -16,7 +16,8 @@ typedef std::tuple<
 	std::vector<CBoundingBox>,
 	std::vector<CGravity>,
 	std::vector<CAnimation>,
-	std::vector<CState>
+	std::vector<CState>,
+	std::vector<CShape>
 > ComponentVecTuple;
 
 // MemoryPool plays the role of storing, deleting, and managing Entities
@@ -60,15 +61,14 @@ public:
 		return m_active;
 	}
 
-	const std::string getTag(size_t entityID) const
+	std::string & getTag(size_t entityID)
 	{
 		return m_tags[entityID];
 	}
 
 	size_t getEmptyIndex();
-	size_t addEntity(const std::string tag);
-	void removeEntity(size_t entityID)
-	{
-		m_active[entityID] = false;
-	}
+	size_t addEntity(std::string tag);
+
+	void removeEntity(size_t entityID);
+	void clear();
 };

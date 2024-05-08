@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <map>
+#include <iostream>
 
 #include "MemoryPool.h"
 
@@ -10,11 +11,10 @@ class EntityManager
 {
 	//std::vector<Entity> m_entities;
 	//std::map<int, std::vector<Entity>> m_entityMap;
-	size_t m_totalEntities = 0;
 
-	template <typename T> void removeComponent(int ID) {
-		MemoryPool::getInstance().getComponent<T>(ID).has = false;
-	}
+	//template <typename T> void removeComponent(int ID) {
+	//	MemoryPool::getInstance().getComponent<T>(ID).has = false;
+	//}
 
 public:
 	EntityManager() {};
@@ -25,9 +25,6 @@ public:
 	{
 		size_t ID = MemoryPool::getInstance().addEntity(tag);
 		//Entity e(ID, tag);
-
-		//m_entities.push_back(e);
-		//m_entityMap[tag].push_back(e);
 
 		return ID;
 	}
@@ -42,16 +39,19 @@ public:
 		return MemoryPool::getInstance().getActiveVector();
 	}
 
+	const std::string& getTag(int ID) const
+	{
+		return MemoryPool::getInstance().getTag(ID);
+	}
+
 	void destoryEntity(int ID)
 	{
 		MemoryPool::getInstance().removeEntity(ID);
-		removeComponent<CTransform>(ID);
-		removeComponent<CLifeSpan>(ID);
-		removeComponent<CInput>(ID);
-		removeComponent<CBoundingBox>(ID);
-		removeComponent<CGravity>(ID);
-		removeComponent<CAnimation>(ID);
-		removeComponent<CState>(ID);
+	}
+
+	void clear()
+	{
+		MemoryPool::getInstance().clear();
 	}
 
 	//std::vector<Entity> & getEntities() { return m_entities; }

@@ -21,7 +21,7 @@ void Assets::loadFromFile(const std::string& path)
 		{
 			addSound(name, fPath);
 		}
-		else if (type == "Texture")
+		else if (type == "Font")
 		{
 			addFont(name, fPath);
 		}
@@ -40,21 +40,24 @@ void Assets::loadAnimationFile(const std::string& path)
 	std::ifstream animationFile(path);
 	std::string name, textureName;
 	std::size_t totalFrames, speed;
-	Vec2 offset, position, size;
+	Vec2 offset, position, size, scale;
 
 	// note configuration file will be in the format of Type Name Path
 	while (!animationFile.eof())
 	{
 		animationFile >> name >> textureName >> totalFrames >> speed >> offset.x >> offset.y >>
-			position.x >> position.y >> size.x >> size.y;
+			position.x >> position.y >> size.x >> size.y >> scale.x >> scale.y;
 
 		std::cout << name << " " << textureName << " " << totalFrames << " " << speed << " " << offset.x << " " << offset.y << " " <<
-			position.x << " " << position.y << " " << size.x << " " << size.y << "\n";
+			position.x << " " << position.y << " " << size.x << " " << size.y << " " << scale.x << " " << scale.y << "\n";
 
 		Animation temp{ name, m_textures[textureName], totalFrames, speed };
 		temp.setOffset(offset.x, offset.y);
 		temp.setPosition(position.x, position.y);
 		temp.setSize(size.x, size.y);
+		temp.setOrigin(size.x / 2, size.y / 2);
+		temp.setScale(scale.x, scale.y);
+
 		addAnimation(name, temp);
 	}
 
@@ -93,4 +96,12 @@ void Assets::addAnimation(std::string name, Animation animation)
 {
 	animation.setName(name);
 	m_animations[name] = animation;
+}
+
+void Assets::clear()
+{
+	m_textures.clear();
+	m_sounds.clear();
+	m_fonts.clear();
+	m_animations.clear();
 }

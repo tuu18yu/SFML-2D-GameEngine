@@ -8,7 +8,7 @@
 
 int main()
 {
-    GameEngine GE("../data/TestECS.txt"); 
+    GameEngine GE("../data/main_menu/assets.txt");
     GE.run();
     return 0;
 }

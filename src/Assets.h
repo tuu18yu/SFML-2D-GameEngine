@@ -12,14 +12,18 @@ class Assets
 	std::map<std::string, sf::Font> m_fonts;
 	std::map<std::string, Animation> m_animations;
 
-public:
-	void loadFromFile(const std::string& path);
 	void loadAnimationFile(const std::string& path);
 
-	void addTexture(std::string &name, std::string &path);
-	void addSound(std::string &name, std::string &path);
-	void addFont(std::string &name, std::string &path);
+	void addTexture(std::string& name, std::string& path);
+	void addSound(std::string& name, std::string& path);
+	void addFont(std::string& name, std::string& path);
 	void addAnimation(std::string name, Animation animation);
+
+public:
+
+	void loadFromFile(const std::string& path);
+
+	void clear();
 
 	sf::Texture & getTexture(std::string name) { return m_textures[name]; }
 	sf::Sound & getSound(std::string name) { return m_sounds[name]; }

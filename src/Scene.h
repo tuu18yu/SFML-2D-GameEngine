@@ -19,7 +19,7 @@ protected:
 	bool			m_paused = false;
 	bool			m_hasEnded = false;
 	size_t			m_currentFrame = 0;
-
+	Vec2			m_size = { 1200, 90 };
 	//virtual void onEnd() = 0;
 	// void setPaused(bool paused);
 
@@ -28,6 +28,7 @@ public:
 	Scene(GameEngine* gameEngine);
 
 	virtual void update() = 0;
+	virtual void init() = 0;
 	virtual void sDoAction(const Action& action) = 0;
 	virtual void sRender() = 0;
 
@@ -35,11 +36,12 @@ public:
 	// void simulate(const size_t frames);
 	void registerAction(int inputKey, const std::string& actionName);
 
-	//size_t width() const;
-	//size_t height() const;
+	//size_t width() { return m_size.x; };
+	//size_t height()  { return m_size.y; };
 	size_t currentFrame() const { return m_currentFrame; }
 
 	bool hasEnded() const { return m_hasEnded; };
 	const ActionMap& getActionMap() const { return m_actionMap; }
-	//void drawLine(const Vec2& p1, const Vec2& p2);
+	void clearEntityManager() { m_entityManager.clear(); }
+	// void drawLine(const Vec2& p1, const Vec2& p2);
 };
