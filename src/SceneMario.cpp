@@ -15,6 +15,7 @@ SceneMario::SceneMario(GameEngine* gameEngine)
 
 void SceneMario::init()
 {
+	m_currentFrame = 0;
 	m_camera.reset(0 * m_scale.x, 100.f, Vec2(1200.f, 900.f));
 	m_camera.setDX(2.f);
 
@@ -312,42 +313,43 @@ void SceneMario::sAnimation()
 {
 	
 	std::string state = m_entityManager.getComponentVector<CState>()[m_playerID].state;
+	CAnimation& anim = m_entityManager.getComponentVector<CAnimation>()[m_playerID];
 
 	if (state == "RIGHT")
 	{
-		m_entityManager.getComponentVector<CAnimation>()[m_playerID].animation = (m_game->assets()).getAnimation("RIGHT");
+		anim.animation = (m_game->assets()).getAnimation("RIGHT");
 	}
 
 	else if (state == "STAND_RIGHT")
 	{
-		m_entityManager.getComponentVector<CAnimation>()[m_playerID].animation = (m_game->assets()).getAnimation("STAND_RIGHT");
+		anim.animation = (m_game->assets()).getAnimation("STAND_RIGHT");
 	}
 
 	else if (state == "LEFT")
 	{
-		m_entityManager.getComponentVector<CAnimation>()[m_playerID].animation = (m_game->assets()).getAnimation("LEFT");
+		anim.animation = (m_game->assets()).getAnimation("LEFT");
 	}
 
 	else if (state == "STAND_LEFT")
 	{
-		m_entityManager.getComponentVector<CAnimation>()[m_playerID].animation = (m_game->assets()).getAnimation("STAND_LEFT");
+		anim.animation = (m_game->assets()).getAnimation("STAND_LEFT");
 	}
 
 	else if (state == "JUMP_LEFT")
 	{
-		m_entityManager.getComponentVector<CAnimation>()[m_playerID].animation = (m_game->assets()).getAnimation("JUMP_LEFT");
+		anim.animation = (m_game->assets()).getAnimation("JUMP_LEFT");
 	}
 	else if (state == "JUMP_RIGHT")
 	{
-		m_entityManager.getComponentVector<CAnimation>()[m_playerID].animation = (m_game->assets()).getAnimation("JUMP_RIGHT");
+		anim.animation = (m_game->assets()).getAnimation("JUMP_RIGHT");
 	}
 	else if (state == "SHIFT_LEFT")
 	{
-		m_entityManager.getComponentVector<CAnimation>()[m_playerID].animation = (m_game->assets()).getAnimation("SHIFT_LEFT");
+		anim.animation = (m_game->assets()).getAnimation("SHIFT_LEFT");
 	}
 	else if (state == "SHIFT_RIGHT")
 	{
-		m_entityManager.getComponentVector<CAnimation>()[m_playerID].animation = (m_game->assets()).getAnimation("SHIFT_RIGHT");
+		anim.animation = (m_game->assets()).getAnimation("SHIFT_RIGHT");
 	}
 }
 
@@ -366,7 +368,6 @@ void SceneMario::sCollision()
 		Vec2 overlap;
 		CBoundingBox BB2 = m_entityManager.getComponentVector<CBoundingBox>()[j];
 		CTransform T2 = m_entityManager.getComponentVector<CTransform>()[j];
-		bool hitItem = false;
 
 
 		if (j != m_playerID && BB2.has)
@@ -377,11 +378,10 @@ void SceneMario::sCollision()
 
 			if (detectCollision(T1.pos, T2pos, BB1.size, BB2.size, overlap))
 			{
-				// std::cout << "mario: " << T1.pos.y << "\t"<< entity_type + ": " << T1.pos.y << "\n";
-				// std::cout << "standing on: " << m_steppingOn << "\n";
 				// coming from top
 				// only resolute collision when stepping on it or not stepping on and coming from top and prev pos is higher than the entity stepping on
-				if (j == m_steppingOn || (m_steppingOn == -1 && T1.prevPos.y < T1.pos.y && T1.prevPos.y < T2.pos.y))
+				if (j == m_steppingOn || (m_steppingOn == -1 && T1.prevPos.y < T1.pos.y 
+					&& (T1.prevPos.y + BB1.size.y/2) < T2.pos.y))
 				{
 					
 					std::cout << entity_type + " coming from top \n";
@@ -406,17 +406,17 @@ void SceneMario::sCollision()
 
 				}
 				// coming from bottom
-				else if (m_steppingOn == -1 && T1.prevPos.y > T1.pos.y)
+				else if (T1.prevPos.y > T1.pos.y 
+					&& (T1.prevPos.y - BB1.size.y / 2) > (T2.pos.y + BB2.size.y))
 				{
 					std::cout << entity_type + " coming from bottom \n";
 					T1.pos.y += overlap.y;
-					hitItem = true;
 
 					gravity.isFall = true;
 				}
 
 				// coming from right
-				if (T1.prevPos.x < T1.pos.x && j != m_steppingOn && !hitItem)
+				else if (T1.prevPos.x < T1.pos.x)
 				{
 					std::cout << "mario: " << T1.pos.y << "\t" << entity_type + ": " << T1.pos.y << "\n";
 					std::cout << entity_type + " coming from right \n";
@@ -424,7 +424,7 @@ void SceneMario::sCollision()
 
 				}
 				// coming from left
-				else if (T1.prevPos.x > T1.pos.x && j != m_steppingOn && !hitItem)
+				else if (T1.prevPos.x > T1.pos.x)
 				{
 					std::cout << entity_type + " coming from left \n";
 					T1.pos.x += overlap.x;

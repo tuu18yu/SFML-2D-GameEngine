@@ -147,11 +147,14 @@
     <ClCompile Include="..\src\Animation.cpp" />
     <ClCompile Include="..\src\Assets.cpp" />
     <ClCompile Include="..\src\Camera.cpp" />
+    <ClCompile Include="..\src\CameraMario.cpp" />
     <ClCompile Include="..\src\GameEngine.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\MemoryPool.cpp" />
     <ClCompile Include="..\src\Physics.cpp" />
     <ClCompile Include="..\src\Scene.cpp" />
+    <ClCompile Include="..\src\SceneMenu.cpp" />
+    <ClCompile Include="..\src\SceneMario.cpp" />
     <ClCompile Include="..\src\SceneTest.cpp" />
     <ClCompile Include="..\src\Vec2.cpp" />
   </ItemGroup>
@@ -160,12 +163,15 @@
     <ClInclude Include="..\src\Animation.h" />
     <ClInclude Include="..\src\Assets.h" />
     <ClInclude Include="..\src\Camera.h" />
+    <ClInclude Include="..\src\CameraMario.h" />
     <ClInclude Include="..\src\Components.h" />
     <ClInclude Include="..\src\EntityManager.h" />
     <ClInclude Include="..\src\GameEngine.h" />
     <ClInclude Include="..\src\MemoryPool.h" />
     <ClInclude Include="..\src\Physics.h" />
     <ClInclude Include="..\src\Scene.h" />
+    <ClInclude Include="..\src\SceneMenu.h" />
+    <ClInclude Include="..\src\SceneMario.h" />
     <ClInclude Include="..\src\SceneTest.h" />
     <ClInclude Include="..\src\Vec2.h" />
   </ItemGroup>

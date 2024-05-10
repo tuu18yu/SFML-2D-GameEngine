@@ -9,22 +9,12 @@
 
 class EntityManager
 {
-	//std::vector<Entity> m_entities;
-	//std::map<int, std::vector<Entity>> m_entityMap;
-
-	//template <typename T> void removeComponent(int ID) {
-	//	MemoryPool::getInstance().getComponent<T>(ID).has = false;
-	//}
-
 public:
 	EntityManager() {};
-
-	/*void update();*/
 
 	size_t addEntity(const std::string tag)
 	{
 		size_t ID = MemoryPool::getInstance().addEntity(tag);
-		//Entity e(ID, tag);
 
 		return ID;
 	}
@@ -53,7 +43,4 @@ public:
 	{
 		MemoryPool::getInstance().clear();
 	}
-
-	//std::vector<Entity> & getEntities() { return m_entities; }
-	//std::vector<Entity> & getEntities(const int tag) { return m_entityMap[tag]; }
 };

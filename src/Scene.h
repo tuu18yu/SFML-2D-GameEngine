@@ -20,8 +20,6 @@ protected:
 	bool			m_hasEnded = false;
 	size_t			m_currentFrame = 0;
 	Vec2			m_size = { 1200, 90 };
-	//virtual void onEnd() = 0;
-	// void setPaused(bool paused);
 
 public:
 	Scene();
