@@ -62,6 +62,7 @@ public:
 class CBoundingBox : public Component
 {
 public:
+	float radius = -1.f;
 	Vec2 size;
 	Vec2 halfSize;
 	CBoundingBox() {}
@@ -95,6 +96,8 @@ class CShape : public Component
 {
 public:
 	sf::RectangleShape shape;
+	sf::CircleShape circle;
+
 	CShape() {}
 	CShape(sf::RectangleShape s)
 		: shape(s)

@@ -15,7 +15,7 @@ SceneMario::SceneMario(GameEngine* gameEngine)
 
 void SceneMario::init()
 {
-	m_currentFrame = 0;
+	
 	m_camera.reset(0 * m_scale.x, 100.f, Vec2(1200.f, 900.f));
 	m_camera.setDX(2.f);
 

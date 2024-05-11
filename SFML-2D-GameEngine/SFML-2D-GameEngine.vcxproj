@@ -155,7 +155,7 @@
     <ClCompile Include="..\src\Scene.cpp" />
     <ClCompile Include="..\src\SceneMenu.cpp" />
     <ClCompile Include="..\src\SceneMario.cpp" />
-    <ClCompile Include="..\src\SceneTest.cpp" />
+    <ClCompile Include="..\src\SceneGeometryWar.cpp" />
     <ClCompile Include="..\src\Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -172,7 +172,7 @@
     <ClInclude Include="..\src\Scene.h" />
     <ClInclude Include="..\src\SceneMenu.h" />
     <ClInclude Include="..\src\SceneMario.h" />
-    <ClInclude Include="..\src\SceneTest.h" />
+    <ClInclude Include="..\src\SceneGeometryWar.h" />
     <ClInclude Include="..\src\Vec2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

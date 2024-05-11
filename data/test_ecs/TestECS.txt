@@ -1,3 +1,0 @@
-Texture background ../data/super_mario_bros/background.png
-Texture character ../data/super_mario_bros/mario-luigi.png
-Animation name ../data/test_ecs/Animation.txt

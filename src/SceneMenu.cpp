@@ -24,8 +24,8 @@ void SceneMenu::init()
 	m_title.setFillColor(sf::Color::White);
 	m_title.setPosition(460, 10);
 
-	addMenuIndex(Vec2{ 110, 210 }, Vec2{ 300, 210 }, "SUPER MARIO BROS");
-	addMenuIndex(Vec2{ 110, 400 }, Vec2{ 360, 400 }, "ECS DESIGN TEST");
+	addMenuIndex(Vec2{ 110, 210 }, Vec2{ 300, 210 }, "SUPER MARIO TEST");
+	addMenuIndex(Vec2{ 110, 400 }, Vec2{ 360, 400 }, "GEOMETRY WAR");
 
 	sf::RectangleShape selectBox;
 	selectBox.setSize(sf::Vector2f(1040, 166));

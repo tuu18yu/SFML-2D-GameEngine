@@ -5,6 +5,10 @@
 
 void Assets::loadFromFile(const std::string& path)
 {
+	if (path == "NONE")
+	{
+		return;
+	}
 	std::ifstream assetFile(path);
 	std::string type, name, fPath;
 	// note configuration file will be in the format of Type Name Path

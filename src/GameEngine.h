@@ -4,7 +4,7 @@
 #include "SFML/Window/Mouse.hpp"
 #include "Scene.h"
 #include "SceneMenu.h"
-#include "SceneTest.h"
+#include "SceneGeometryWar.h"
 #include "SceneMario.h"
 #include "Assets.h"
 #include "MemoryPool.h"
@@ -29,7 +29,6 @@ protected:
 	void update();
 
 	void sKeyboardInput();
-	Vec2 sMouseInput();
 
 	std::shared_ptr<Scene> currentScene() { return m_sceneMap[m_currentScene]; }
 
@@ -38,6 +37,8 @@ public:
 	void changeScene(const int sceneName);
 	void quit();
 	void run();
+
+	Vec2 getMousePosition();
 	
 	sf::RenderWindow& window() { return m_windows; }
 	Assets& assets() { return m_assets; };

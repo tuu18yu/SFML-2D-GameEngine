@@ -5,7 +5,7 @@
 
 #include "Components.h"
 
-constexpr int MAX_ENTITIES = 100;
+constexpr int MAX_ENTITIES = 100000;
 constexpr int NUM_COMPONENTS = 8;
 
 // MemoryPool where it contains 'rows' or vector of each Component where each 'column' or index of the tuple is an Entity

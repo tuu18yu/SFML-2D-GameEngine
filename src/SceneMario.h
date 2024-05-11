@@ -9,17 +9,13 @@
 
 class SceneMario : public Scene
 {
-
 protected:
 
 	int						m_playerID;
-	bool					m_drawTextures = true;
 	bool					m_drawCollision = true;
-	bool					m_drawGrid = false;
 	int						m_steppingOn = -1;
-	const Vec2				m_gridSize = { 64, 64 };
+
 	const Vec2				m_scale = { 4.0, 4.0 };
-	sf::Text				m_gridText;
 	sf::Sprite				m_background;
 	CameraMario				m_camera;
 

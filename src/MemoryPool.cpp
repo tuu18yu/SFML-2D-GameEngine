@@ -21,12 +21,7 @@ MemoryPool::MemoryPool(int maxEntities)
 
 size_t MemoryPool::getEmptyIndex()
 {
-	for (size_t i = m_lastAssignedID + 1; i < MAX_ENTITIES; i++)
-	{
-		if (!m_active[i]) { return i; }
-	}
-
-	for (size_t i = 0; i < m_lastAssignedID; i++)
+	for (size_t i = 0; i < MAX_ENTITIES; i++)
 	{
 		if (!m_active[i]) { return i; }
 	}

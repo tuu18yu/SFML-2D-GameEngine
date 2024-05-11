@@ -1,2 +1,0 @@
-RIGHT character 3 10 1 0 97 1 16 31
-STAND character 1 1 1 0 80 1 16 31

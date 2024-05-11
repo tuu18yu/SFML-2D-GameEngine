@@ -24,7 +24,7 @@
     <ClCompile Include="..\src\Scene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\SceneTest.cpp">
+    <ClCompile Include="..\src\SceneGeometryWar.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\src\SceneMenu.cpp">
@@ -66,7 +66,7 @@
     <ClInclude Include="..\src\Assets.h">
       <Filter>Assets</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\SceneTest.h">
+    <ClInclude Include="..\src\SceneGeometryWar.h">
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Scene.h">

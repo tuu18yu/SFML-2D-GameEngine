@@ -21,11 +21,11 @@ void GameEngine::init(const std::string& path)
 	m_sceneMap[1] = p;
 	m_assetsMap[1] = "../data/super_mario_bros/SuperMarioBros.txt";
 
-	p = std::make_shared<SceneTest>(this);
+	p = std::make_shared<SceneGeometryWar>(this);
 	m_sceneMap[2] = p;
-	m_assetsMap[2] = "../data/test_ecs/TestECS.txt";
+	m_assetsMap[2] = "../data/geometry_war/assets.txt";
 
-	m_currentScene = 1;
+	m_currentScene = 2;
 	m_assets.loadFromFile(m_assetsMap[m_currentScene]);
 }
 
@@ -54,10 +54,17 @@ void GameEngine::sKeyboardInput()
 			currentScene()->doAction(Action(currentScene()->getActionMap().at(event.key.code), actionType));
 		}
 
+		if (event.type == sf::Event::MouseButtonPressed || event.type == sf::Event::MouseButtonReleased)
+		{
+			if (currentScene()->getActionMap().find(event.mouseButton.button) == currentScene()->getActionMap().end()) { continue; }
+			const std::string actionType = (event.type == sf::Event::MouseButtonPressed) ? "START" : "END";
+			currentScene()->doAction(Action(currentScene()->getActionMap().at(event.mouseButton.button), actionType));
+		}
+
 	}
 }
 
-Vec2 GameEngine::sMouseInput()
+Vec2 GameEngine::getMousePosition()
 {
 	Vec2 mousePos;
 	float x = (float)sf::Mouse::getPosition(m_windows).x;
