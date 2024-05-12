@@ -7,7 +7,7 @@
 SceneMenu::SceneMenu(GameEngine* gameEngine)
 	:Scene(gameEngine)
 {
-	//init();
+	init();
 }
 
 void SceneMenu::init()

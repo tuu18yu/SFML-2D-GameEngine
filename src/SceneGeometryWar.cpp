@@ -1,6 +1,6 @@
 #include "SceneGeometryWar.h"
 #include "GameEngine.h"
-#include "Physics.h"
+#include "Collision.h"
 #include <iostream>
 #include <fstream>
 
@@ -21,6 +21,8 @@ void SceneGeometryWar::init()
 	registerAction(sf::Keyboard::D, "DOWN");
 	registerAction(sf::Keyboard::F, "RIGHT");
 	registerAction(sf::Mouse::Left, "SHOOT");
+
+	registerAction(sf::Keyboard::B, "RETURN MENU");
 
 }
 
@@ -260,6 +262,10 @@ void SceneGeometryWar::sDoAction(const Action& action)
 		{
 			spawnBullet();
 		}
+		if (action.name() == "RETURN MENU")
+		{
+			m_game->changeScene(0);
+		}
 	}
 
 	else
@@ -294,6 +300,7 @@ void SceneGeometryWar::sMovement()
 {
 	CInput &input = m_entityManager.getComponentVector<CInput>()[m_playerID];
 	CTransform &trans = m_entityManager.getComponentVector<CTransform>()[m_playerID];
+	CBoundingBox& BB = m_entityManager.getComponentVector<CBoundingBox>()[m_playerID];
 
 	if (input.right)
 	{
@@ -310,6 +317,26 @@ void SceneGeometryWar::sMovement()
 	if (input.up)
 	{
 		trans.pos.y -= trans.velocity.y;
+	}
+
+	// check if player hits the border
+	Vec2 wSize(m_game->window().getSize().x, m_game->window().getSize().y);
+	if (trans.pos.y - BB.radius < 0.0f)
+	{
+		trans.pos.y -= trans.pos.y - BB.radius;
+	}
+	
+	else if (trans.pos.y + BB.radius > wSize.y)
+	{
+		trans.pos.y -= (trans.pos.y + BB.radius) - wSize.y;
+	}
+	if (trans.pos.x - BB.radius < 0.0f)
+	{
+		trans.pos.x -= trans.pos.x - BB.radius;
+	}
+	else if(trans.pos.x + BB.radius > wSize.x)
+	{
+		trans.pos.x -= (trans.pos.x + BB.radius) - wSize.x;
 	}
 	
 
@@ -359,7 +386,7 @@ void SceneGeometryWar::sRender()
 
 	for (int i=0; i < 1000; i++)
 	{
-		CShape e = m_entityManager.getComponentVector<CShape>()[i];
+		CShape &e = m_entityManager.getComponentVector<CShape>()[i];
 		Vec2 pos = m_entityManager.getComponentVector<CTransform>()[i].pos;
 		if (e.has)
 		{

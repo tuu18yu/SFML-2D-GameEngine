@@ -10,7 +10,7 @@ MemoryPool::MemoryPool(int maxEntities)
 	std::vector<CLifeSpan> life(maxEntities);
 	std::vector<CInput> input(maxEntities);
 	std::vector<CBoundingBox> box(maxEntities);
-	std::vector<CGravity> gravity(maxEntities);
+	std::vector<CForce> gravity(maxEntities);
 	std::vector<CAnimation> animation(maxEntities);
 	std::vector<CState> state(maxEntities);
 	std::vector<CShape> shape(maxEntities);
@@ -49,7 +49,7 @@ void MemoryPool::removeEntity(size_t ID)
 	getComponent<CLifeSpan>(ID).has = false;
 	getComponent<CInput>(ID).has = false;
 	getComponent<CBoundingBox>(ID).has = false;
-	getComponent<CGravity>(ID).has = false;
+	getComponent<CForce>(ID).has = false;
 	getComponent<CAnimation>(ID).has = false;
 	getComponent<CState>(ID).has = false;
 	getComponent<CShape>(ID).has = false;

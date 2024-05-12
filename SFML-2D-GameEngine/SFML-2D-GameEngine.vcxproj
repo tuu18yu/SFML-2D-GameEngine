@@ -151,7 +151,7 @@
     <ClCompile Include="..\src\GameEngine.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\MemoryPool.cpp" />
-    <ClCompile Include="..\src\Physics.cpp" />
+    <ClCompile Include="..\src\Collision.cpp" />
     <ClCompile Include="..\src\Scene.cpp" />
     <ClCompile Include="..\src\SceneMenu.cpp" />
     <ClCompile Include="..\src\SceneMario.cpp" />
@@ -168,7 +168,7 @@
     <ClInclude Include="..\src\EntityManager.h" />
     <ClInclude Include="..\src\GameEngine.h" />
     <ClInclude Include="..\src\MemoryPool.h" />
-    <ClInclude Include="..\src\Physics.h" />
+    <ClInclude Include="..\src\Collision.h" />
     <ClInclude Include="..\src\Scene.h" />
     <ClInclude Include="..\src\SceneMenu.h" />
     <ClInclude Include="..\src\SceneMario.h" />

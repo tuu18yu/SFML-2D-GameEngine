@@ -14,7 +14,7 @@ typedef std::tuple<
 	std::vector<CLifeSpan>,
 	std::vector<CInput>,
 	std::vector<CBoundingBox>,
-	std::vector<CGravity>,
+	std::vector<CForce>,
 	std::vector<CAnimation>,
 	std::vector<CState>,
 	std::vector<CShape>

@@ -1,9 +1,6 @@
 #include "SceneMario.h"
-#include "Physics.h"
-#include "Assets.h"
+#include "Collision.h"
 #include "GameEngine.h"
-#include "Components.h"
-#include "Action.h"
 
 #include <iostream>
 
@@ -19,45 +16,25 @@ void SceneMario::init()
 	m_camera.reset(0 * m_scale.x, 100.f, Vec2(1200.f, 900.f));
 	m_camera.setDX(2.f);
 
-	registerAction(sf::Keyboard::P, "PAUSE");
-	registerAction(sf::Keyboard::Escape, "QUIT");
-	registerAction(sf::Keyboard::T, "TOGGLE_TEXTURE");
-	registerAction(sf::Keyboard::C, "TOGGLE_COLLISION");
-	registerAction(sf::Keyboard::G, "TOGGLE_GRID");
-
 	registerAction(sf::Keyboard::D, "RIGHT");
 	registerAction(sf::Keyboard::Right, "RIGHT");
+
 	registerAction(sf::Keyboard::A, "LEFT");
 	registerAction(sf::Keyboard::Left, "LEFT");
-
+	
+	registerAction(sf::Keyboard::W, "JUMP");
 	registerAction(sf::Keyboard::Space, "JUMP");
+	registerAction(sf::Keyboard::Up, "JUMP");
+	registerAction(sf::Keyboard::B, "RETURN MENU");
+
 
 
 	m_background.setTexture((m_game->assets()).getTexture("background"));
 	m_background.setScale(m_scale.x, m_scale.y);
 	m_background.setTextureRect(sf::IntRect(0, 0, 13504, 1920));
 
-	m_playerID = m_entityManager.addEntity("PLAYER");
-	m_entityManager.getComponentVector<CInput>()[m_playerID].has = true;
-
-	m_entityManager.getComponentVector<CAnimation>()[m_playerID].has = true;
-
-	m_entityManager.getComponentVector<CTransform>()[m_playerID].has = true;
-	m_entityManager.getComponentVector<CTransform>()[m_playerID].prevPos = Vec2{ 10 * m_scale.x, (208.f * m_scale.y) - (31.f * 3.f) };
-	m_entityManager.getComponentVector<CTransform>()[m_playerID].pos = Vec2{ 10 * m_scale.x, (208.f * m_scale.y) - (31.f * 3.f) };
-	m_entityManager.getComponentVector<CTransform>()[m_playerID].velocity = Vec2{ 2, 3 };
-
-	m_entityManager.getComponentVector<CGravity>()[m_playerID].has = true;
-	m_entityManager.getComponentVector<CGravity>()[m_playerID].gravity = 0.15f;
-	m_entityManager.getComponentVector<CGravity>()[m_playerID].speed = 6.5f;
-	m_entityManager.getComponentVector<CGravity>()[m_playerID].threshold = 68.f * m_scale.y;
-
-	m_entityManager.getComponentVector<CState>()[m_playerID].has = true;
-	m_entityManager.getComponentVector<CState>()[m_playerID].state = "STAND_RIGHT";
-
-	m_entityManager.getComponentVector<CBoundingBox>()[m_playerID].has = true;
-	m_entityManager.getComponentVector<CBoundingBox>()[m_playerID].size = Vec2(16.f*3, 31.f*3);
-
+	spawnPlayer();
+	
 	buildPipe(Vec2(27.f, 31.f), Vec2(450.f, 176.f));
 	buildPipe(Vec2(27.f, 47.f), Vec2(610.f, 160.f));
 	buildPipe(Vec2(27.f, 63.f), Vec2(738.f, 144.f));
@@ -75,7 +52,38 @@ void SceneMario::init()
 	buildStairs(Vec2(15.f, 15.f), Vec2(2368.f, 192.f), 4, true, 2);
 	buildStairs(Vec2(15.f, 15.f), Vec2(2480.f, 144.f), 4, false, 1);
 	buildStairs(Vec2(15.f, 15.f), Vec2(2896.f, 192.f), 8, true, 1);
+}
 
+int SceneMario::spawnPlayer()
+{
+	m_playerID = m_entityManager.addEntity("PLAYER");
+	m_entityManager.getComponentVector<CInput>()[m_playerID].has = true;
+
+	m_entityManager.getComponentVector<CAnimation>()[m_playerID].has = true;
+	m_entityManager.getComponentVector<CAnimation>()[m_playerID].animation.getSprite().setOrigin(0, 0);
+
+	m_entityManager.getComponentVector<CTransform>()[m_playerID].has = true;
+	m_entityManager.getComponentVector<CTransform>()[m_playerID].prevPos = Vec2{ 10 * m_scale.x, (208.f * m_scale.y) - (31.f * 3.f) };
+	m_entityManager.getComponentVector<CTransform>()[m_playerID].pos = Vec2{ 10 * m_scale.x, (208.f * m_scale.y) - (31.f * 3.f) };
+	m_entityManager.getComponentVector<CTransform>()[m_playerID].velocity = Vec2{ 0.f, 0.f };
+
+	m_entityManager.getComponentVector<CForce>()[m_playerID].has = true;
+	m_entityManager.getComponentVector<CForce>()[m_playerID].gravity = 4.5f;
+	m_entityManager.getComponentVector<CForce>()[m_playerID].friction = 2.8f;
+	m_entityManager.getComponentVector<CForce>()[m_playerID].x = 3.3f;
+	m_entityManager.getComponentVector<CForce>()[m_playerID].y = 5.0f;
+
+	m_entityManager.getComponentVector<CState>()[m_playerID].has = true;
+	m_entityManager.getComponentVector<CState>()[m_playerID].state = "STAND_RIGHT";
+
+	m_entityManager.getComponentVector<CBoundingBox>()[m_playerID].has = true;
+	m_entityManager.getComponentVector<CBoundingBox>()[m_playerID].size = Vec2(16.f * 3, 31.f * 3);
+
+	return m_playerID;
+}
+
+int SceneMario::buildItemBlock(Vec2 size, Vec2 pos)
+{
 	int item = m_entityManager.addEntity("ITEM_BLOCK");
 	m_entityManager.getComponentVector<CAnimation>()[item].has = true;
 	m_entityManager.getComponentVector<CAnimation>()[item].animation = (m_game->assets()).getAnimation("ITEM_BLOCK");
@@ -85,6 +93,8 @@ void SceneMario::init()
 
 	m_entityManager.getComponentVector<CBoundingBox>()[item].has = true;
 	m_entityManager.getComponentVector<CBoundingBox>()[item].size = Vec2(15.f * m_scale.x, 15.f * m_scale.y);
+
+	return item;
 }
 
 int SceneMario::buildPipe(Vec2 size, Vec2 pos)
@@ -194,15 +204,18 @@ void SceneMario::sDoAction(const Action& action)
 		{
 			m_entityManager.getComponentVector<CInput>()[m_playerID].right = true;
 		}
-		else if (action.name() == "LEFT")
+		if (action.name() == "LEFT")
 		{
 			m_entityManager.getComponentVector<CInput>()[m_playerID].left = true;
 		}
-		else if (action.name() == "JUMP")
+		if (action.name() == "JUMP" && m_steppingOn != -1) // only jump when on floor
 		{
 			m_entityManager.getComponentVector<CInput>()[m_playerID].jump = true;
 		}
-		
+		if (action.name() == "RETURN MENU")
+		{
+			m_game->changeScene(0);
+		}
 	}
 
 	else
@@ -211,7 +224,7 @@ void SceneMario::sDoAction(const Action& action)
 		{
 			m_entityManager.getComponentVector<CInput>()[m_playerID].right = false;
 		}
-		else if (action.name() == "LEFT")
+		if (action.name() == "LEFT")
 		{
 			m_entityManager.getComponentVector<CInput>()[m_playerID].left = false;
 		}
@@ -222,39 +235,65 @@ void SceneMario::sMovement()
 {
 	std::string &state = m_entityManager.getComponentVector<CState>()[m_playerID].state;
 	CTransform& trans = m_entityManager.getComponentVector<CTransform>()[m_playerID];
-	Animation& anim = m_entityManager.getComponentVector<CAnimation>()[m_playerID].animation;
+	CForce& force = m_entityManager.getComponentVector<CForce>()[m_playerID];
 
-	// std::cout << "state before: " << state << "\n";
+	std::cout << "BEFORE: " << trans.velocity.toString() << std::endl;
 	if (m_entityManager.getComponentVector<CInput>()[m_playerID].right)
 	{
-		if (state == "LEFT")
-		{
-			state = "SHIFT_LEFT";
-		}
-		else if (state == "STAND_LEFT")
-		{
-			state = "RIGHT";
-			anim.getSprite().setOrigin(0, 0);
-		}
-		else
-		{
-			state = "RIGHT";
-		}
-		trans.prevPos.x = trans.pos.x;
-		trans.pos.x += trans.velocity.x;
+		// accelerates to the right as holding the key
+		trans.velocity.x += force.x * m_timeConstant;
+		
 	}
-	else if (m_entityManager.getComponentVector<CInput>()[m_playerID].left)
+
+	if (m_entityManager.getComponentVector<CInput>()[m_playerID].left)
 	{
-		if (state == "RIGHT")
+		// accelerates to the left as holding the key
+		trans.velocity.x -= force.x * m_timeConstant;
+		std::cout << "DURING: " << trans.velocity.toString() << std::endl;
+	}
+
+
+	if (m_entityManager.getComponentVector<CInput>()[m_playerID].jump)
+	{
+		m_steppingOn = -1;
+		// jumps upwards
+		trans.velocity.y -= force.y;
+		m_entityManager.getComponentVector<CInput>()[m_playerID].jump = false;
+	}
+
+	// when in air, apply gravity
+	if (m_steppingOn == -1)
+	{
+		trans.velocity.y += force.gravity * m_timeConstant;
+	}
+
+	// apply friction
+	if (trans.velocity.x > 0)
+	{
+		trans.velocity.x -= force.friction * m_timeConstant;
+		if (trans.velocity.x < 0)
 		{
-			state = "SHIFT_RIGHT";
+			trans.velocity.x = 0;
 		}
-		else
+	}
+
+	else if (trans.velocity.x < 0)
+	{
+		trans.velocity.x += force.friction * m_timeConstant;
+		if (trans.velocity.x > 0)
 		{
-			state = "LEFT";
+			trans.velocity.x = 0;
 		}
-		trans.prevPos.x = trans.pos.x;
-		trans.pos.x -= trans.velocity.x;
+	}
+
+	// apply state
+	if (trans.velocity.x > 0)
+	{
+		state = "RIGHT";
+	}
+	else if (trans.velocity.x < 0)
+	{
+		state = "LEFT";
 	}
 	else
 	{
@@ -268,10 +307,8 @@ void SceneMario::sMovement()
 		}
 	}
 
-	if (m_entityManager.getComponentVector<CInput>()[m_playerID].jump)
+	if (m_steppingOn == -1)
 	{
-		m_steppingOn = -1;
-
 		if (state == "RIGHT" || state == "STAND_RIGHT")
 		{
 			state = "JUMP_RIGHT";
@@ -280,33 +317,11 @@ void SceneMario::sMovement()
 		{
 			state = "JUMP_LEFT";
 		}
-
-		CGravity &gravity = m_entityManager.getComponentVector<CGravity>()[m_playerID]; 
-
-		if (!gravity.isFall)
-		{
-
-			trans.prevPos.y = trans.pos.y;
-			trans.pos.y -= trans.velocity.y + gravity.speed;
-			gravity.current += trans.velocity.y + gravity.speed;
-			gravity.speed - gravity.gravity < 0 ? gravity.speed = 0 : gravity.speed -= gravity.gravity;
-
-			if (gravity.current >= gravity.threshold)
-			{
-				gravity.isFall = true;
-			}
-		}
-		else
-		{
-			trans.prevPos.y = trans.pos.y;
-			trans.pos.y += trans.velocity.y + gravity.speed;
-			gravity.current -= trans.velocity.y + gravity.speed;
-			gravity.speed + gravity.gravity > 6.5f ? gravity.speed = 6.5f : gravity.speed += gravity.gravity;
-
-		}
-		
 	}
-	//std::cout << "state after: " + state + "\n";
+
+	trans.prevPos = trans.pos;
+	trans.pos += trans.velocity;
+	std::cout << "AFTER: " << trans.velocity.toString() << std::endl;
 }
 
 void SceneMario::sAnimation()
@@ -358,7 +373,6 @@ void SceneMario::sCollision()
 	
 	CBoundingBox BB1 = m_entityManager.getComponentVector<CBoundingBox>()[m_playerID];
 	CTransform &T1 = m_entityManager.getComponentVector<CTransform>()[m_playerID];
-	CGravity &gravity = m_entityManager.getComponentVector<CGravity>()[m_playerID];
 	std::string &state = m_entityManager.getComponentVector<CState>()[m_playerID].state;
 
 	bool isOnFloor = false;
@@ -383,16 +397,12 @@ void SceneMario::sCollision()
 				if (j == m_steppingOn || (m_steppingOn == -1 && T1.prevPos.y < T1.pos.y 
 					&& (T1.prevPos.y + BB1.size.y/2) < T2.pos.y))
 				{
-					
-					std::cout << entity_type + " coming from top \n";
 					isOnFloor = true;
 					m_steppingOn = j;
 					
 					T1.pos.y -= overlap.y;
+					T1.velocity.y = 0;
 
-					gravity.isFall = false;
-					gravity.current = 0;
-					gravity.speed = 6.5f;
 					m_entityManager.getComponentVector<CInput>()[m_playerID].jump = false;
 
 					if (m_entityManager.getComponentVector<CState>()[m_playerID].state == "JUMP_RIGHT")
@@ -409,24 +419,18 @@ void SceneMario::sCollision()
 				else if (T1.prevPos.y > T1.pos.y 
 					&& (T1.prevPos.y - BB1.size.y / 2) > (T2.pos.y + BB2.size.y))
 				{
-					std::cout << entity_type + " coming from bottom \n";
 					T1.pos.y += overlap.y;
-
-					gravity.isFall = true;
 				}
 
 				// coming from right
 				else if (T1.prevPos.x < T1.pos.x)
 				{
-					std::cout << "mario: " << T1.pos.y << "\t" << entity_type + ": " << T1.pos.y << "\n";
-					std::cout << entity_type + " coming from right \n";
 					T1.pos.x -= overlap.x;
 
 				}
 				// coming from left
 				else if (T1.prevPos.x > T1.pos.x)
 				{
-					std::cout << entity_type + " coming from left \n";
 					T1.pos.x += overlap.x;
 				}
 			}
@@ -446,21 +450,7 @@ void SceneMario::sCollision()
 		}
 
 		m_steppingOn = -1;
-		m_entityManager.getComponentVector<CInput>()[m_playerID].jump = true;
-
-		gravity.isFall = true;
-		gravity.speed = 2.5f;
-
-		CTransform& trans = m_entityManager.getComponentVector<CTransform>()[m_playerID];
-		
-		trans.prevPos.y = trans.pos.y;
-		trans.pos.y += trans.velocity.y + gravity.speed;
-		gravity.current -= trans.velocity.y + gravity.speed;
-		gravity.speed + gravity.gravity > 6.5f ? gravity.speed = 6.5f : gravity.speed += gravity.gravity;
-
 	}
-	
-	
 }
 
 void SceneMario::update()
@@ -469,6 +459,7 @@ void SceneMario::update()
 	sMovement();
 	sCollision(); 
 	sAnimation();
+	m_camera.setDX(m_entityManager.getComponentVector<CTransform>()[m_playerID].velocity.x);
 	m_camera.horizontalMove(m_entityManager.getComponentVector<CTransform>()[m_playerID].pos.x);
 	m_game->window().setView(m_camera.view());
 	sRender();

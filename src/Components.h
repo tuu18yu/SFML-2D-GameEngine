@@ -70,17 +70,16 @@ public:
 		: size(s), halfSize(s.x / 2, s.y / 2) {}
 };
 
-class CGravity : public Component
+class CForce : public Component
 {
 public:
-	float gravity = 0;
-	float speed = 0;
-	float threshold = 0;
-	float current = 0;
-	bool isFall = false;
-	CGravity() {}
-	CGravity(float g)
-		: gravity(g) {}
+	float gravity = 0.f;
+	float friction = 0.f;
+	float x = 0.f;
+	float y = 0.f;
+	CForce() {}
+	CForce(float g, float f, float x, float y)
+		: gravity(g), friction(f), x(x), y(y) {}
 };
 
 class CState : public Component

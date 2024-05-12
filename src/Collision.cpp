@@ -1,5 +1,5 @@
 
-#include "Physics.h"
+#include "Collision.h"
 #include <iostream>
 
 bool detectCollision(Vec2 c1, Vec2 c2, float r1, float r2, Vec2& overlap)

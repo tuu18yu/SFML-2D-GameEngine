@@ -1,13 +1,13 @@
 #include "GameEngine.h"
 
-GameEngine::GameEngine(const std::string& path)
+GameEngine::GameEngine()
 {
-	init(path);
+	init();
 }
 
-void GameEngine::init(const std::string& path)
+void GameEngine::init()
 {
-	m_assets.loadFromFile(path);
+	std::cout << "initialized" << std::endl;
 	m_windows.create(sf::VideoMode(1280, 960), "Game Engine");
 	m_windows.setFramerateLimit(100);
 	
@@ -25,7 +25,7 @@ void GameEngine::init(const std::string& path)
 	m_sceneMap[2] = p;
 	m_assetsMap[2] = "../data/geometry_war/assets.txt";
 
-	m_currentScene = 2;
+	m_currentScene = 1;
 	m_assets.loadFromFile(m_assetsMap[m_currentScene]);
 }
 

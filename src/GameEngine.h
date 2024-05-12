@@ -25,7 +25,7 @@ protected:
 	size_t				m_simulationSpeed = 1;
 	bool				m_running = true;
 
-	void init(const std::string& path);
+	void init();
 	void update();
 
 	void sKeyboardInput();
@@ -33,7 +33,7 @@ protected:
 	std::shared_ptr<Scene> currentScene() { return m_sceneMap[m_currentScene]; }
 
 public:
-	GameEngine(const std::string& path);
+	GameEngine();
 	void changeScene(const int sceneName);
 	void quit();
 	void run();
